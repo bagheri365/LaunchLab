@@ -1,5 +1,11 @@
 """LaunchLab."""
 
+from .decision_power import (
+    PowerComparison,
+    compare_statistical_and_decision_power,
+    decision_truth,
+    statistical_power_for_scenario,
+)
 from .economics import (
     EconomicsConfig,
     OptimalAction,
@@ -54,6 +60,7 @@ __all__ = [
     "OptimalAction",
     "PolicyAggregate",
     "PolicyResult",
+    "PowerComparison",
     "ProportionEffect",
     "RepeatedUserExperiment",
     "SampleRatioMismatchResult",
@@ -64,6 +71,8 @@ __all__ = [
     "annual_deployment_value",
     "annual_incremental_serving_cost",
     "check_sample_ratio_mismatch",
+    "compare_statistical_and_decision_power",
+    "decision_truth",
     "economic_allowed_loss",
     "economic_break_even_policy",
     "economic_regret",
@@ -82,6 +91,7 @@ __all__ = [
     "run_monte_carlo_benchmark",
     "simulate_experiment",
     "simulate_repeated_user_experiment",
+    "statistical_power_for_scenario",
     "statistical_superiority_policy",
     "validate_aa_experiment",
 ]

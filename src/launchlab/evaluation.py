@@ -26,6 +26,11 @@ class BenchmarkScenario:
     treatment_effect: float
     economics: EconomicsConfig
     practical_threshold: float = 0.001
+    policy_economics: EconomicsConfig | None = None
+
+    @property
+    def assumed_economics(self) -> EconomicsConfig:
+        return self.policy_economics or self.economics
 
 
 @dataclass(frozen=True)
@@ -107,7 +112,7 @@ def run_monte_carlo_benchmark(
 
             for policy_result in _policy_results(
                 effect,
-                scenario.economics,
+                scenario.assumed_economics,
                 scenario.practical_threshold,
             ):
                 s = stats[policy_result.policy]
