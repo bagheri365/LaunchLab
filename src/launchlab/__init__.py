@@ -39,6 +39,8 @@ from .power import (
     required_sample_size_per_arm,
 )
 from .reporting import (
+    write_sensitivity_csv,
+    write_sensitivity_svg,
     write_policy_aggregates_csv,
     write_power_comparison_svg,
     write_power_comparisons_csv,
@@ -50,6 +52,7 @@ from .repeated import (
     analyze_naively_at_request_level,
     simulate_repeated_user_experiment,
 )
+from .sensitivity import SensitivityPoint, run_sensitivity_grid
 from .simulation import SimulatedExperiment, simulate_experiment
 from .workflow import WorkflowConfig, WorkflowResult, run_launch_workflow
 from .validation import (
@@ -75,6 +78,7 @@ __all__ = [
     "RepeatedUserExperiment",
     "SampleRatioMismatchResult",
     "SimulatedExperiment",
+    "SensitivityPoint",
     "analyze_at_user_level",
     "analyze_naively_at_request_level",
     "annual_cost_savings",
@@ -100,10 +104,13 @@ __all__ = [
     "risk_adjusted_expected_value_policy",
     "risk_weighted_loss",
     "run_monte_carlo_benchmark",
+    "run_sensitivity_grid",
     "write_policy_aggregates_csv",
     "write_power_comparison_svg",
     "write_power_comparisons_csv",
     "write_regret_svg",
+    "write_sensitivity_csv",
+    "write_sensitivity_svg",
     "simulate_experiment",
     "simulate_repeated_user_experiment",
     "statistical_power_for_scenario",

@@ -15,7 +15,8 @@ Implemented milestones:
 - economic-assumption misspecification;
 - reproducible CSV/SVG reporting;
 - a production-style end-to-end launch workflow with predeclared gates;
-- decision-readiness traffic planning for inconclusive experiments.
+- decision-readiness traffic planning;
+- sensitivity analysis over traffic, business value, serving cost, and practical thresholds.
 
 Run:
 
@@ -26,6 +27,14 @@ python scripts/run_decision_power.py
 python scripts/run_reporting.py
 python scripts/run_workflow.py
 python scripts/run_traffic_planning.py
+python scripts/run_sensitivity.py
 ```
 
-The traffic planner estimates required and additional per-arm sample sizes for the observed effect, the practical-significance threshold, and any positive economic break-even threshold. The largest requirement is reported as the binding decision-readiness constraint.
+The sensitivity runner writes:
+
+```text
+results/tables/sensitivity_grid.csv
+results/figures/economic_break_even_sensitivity.svg
+```
+
+The grid makes policy flips explicit as sample size and business assumptions change.

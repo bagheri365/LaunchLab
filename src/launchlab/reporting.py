@@ -7,6 +7,7 @@ from xml.sax.saxutils import escape
 
 from .decision_power import PowerComparison
 from .evaluation import PolicyAggregate
+from .sensitivity import SensitivityPoint
 
 
 def _ensure_parent(path: Path) -> None:
@@ -163,6 +164,108 @@ def write_regret_svg(
             f'<text x="{left+bar_w+6:.1f}" y="{y+12}" '
             f'font-family="sans-serif" font-size="11">{row.mean_regret:.0f}</text>'
         )
+
+    out.append("</svg>")
+    path.write_text("\n".join(out), encoding="utf-8")
+    return path
+
+
+def write_sensitivity_csv(
+    rows: Iterable[SensitivityPoint],
+    path: str | Path,
+) -> Path:
+    rows = list(rows)
+    path = Path(path)
+    _ensure_parent(path)
+    fields = [
+        "sample_size",
+        "value_per_conversion",
+        "candidate_cost_per_request",
+        "practical_threshold",
+        "policy",
+        "decision",
+        "estimate",
+        "lower_bound",
+        "upper_bound",
+        "threshold",
+    ]
+    with path.open("w", newline="", encoding="utf-8") as f:
+        writer = csv.DictWriter(f, fieldnames=fields)
+        writer.writeheader()
+        for row in rows:
+            writer.writerow({field: getattr(row, field) for field in fields})
+    return path
+
+
+def write_sensitivity_svg(
+    rows: Iterable[SensitivityPoint],
+    path: str | Path,
+    *,
+    policy: str,
+    x_field: str = "sample_size",
+    y_field: str = "value_per_conversion",
+) -> Path:
+    rows = [row for row in rows if row.policy == policy]
+    if not rows:
+        raise ValueError("no rows found for requested policy.")
+
+    path = Path(path)
+    _ensure_parent(path)
+
+    xs = sorted({getattr(row, x_field) for row in rows})
+    ys = sorted({getattr(row, y_field) for row in rows})
+    cell_w = 120
+    cell_h = 44
+    left = 170
+    top = 80
+    width = left + cell_w * len(xs) + 40
+    height = top + cell_h * len(ys) + 80
+
+    decision_fill = {
+        "SHIP": "#d9ead3",
+        "REJECT": "#f4cccc",
+        "INCONCLUSIVE": "#fff2cc",
+    }
+
+    out = [
+        f'<svg xmlns="http://www.w3.org/2000/svg" width="{width}" height="{height}" '
+        f'viewBox="0 0 {width} {height}">',
+        '<rect width="100%" height="100%" fill="white"/>',
+        f'<text x="30" y="36" font-family="sans-serif" font-size="22" '
+        f'font-weight="bold">{escape(policy)} sensitivity</text>',
+    ]
+
+    for ix, x in enumerate(xs):
+        xpos = left + ix * cell_w + cell_w / 2
+        out.append(
+            f'<text x="{xpos:.1f}" y="{top-16}" text-anchor="middle" '
+            f'font-family="sans-serif" font-size="11">{escape(str(x))}</text>'
+        )
+
+    for iy, y in enumerate(reversed(ys)):
+        ypos = top + iy * cell_h
+        out.append(
+            f'<text x="{left-12}" y="{ypos+27}" text-anchor="end" '
+            f'font-family="sans-serif" font-size="11">{escape(str(y))}</text>'
+        )
+        for ix, x in enumerate(xs):
+            candidates = [
+                row for row in rows
+                if getattr(row, x_field) == x and getattr(row, y_field) == y
+            ]
+            if not candidates:
+                continue
+            decisions = {row.decision for row in candidates}
+            decision = next(iter(decisions)) if len(decisions) == 1 else "INCONCLUSIVE"
+            x0 = left + ix * cell_w
+            out.append(
+                f'<rect x="{x0}" y="{ypos}" width="{cell_w-2}" height="{cell_h-2}" '
+                f'fill="{decision_fill[decision]}" stroke="#cccccc"/>'
+            )
+            out.append(
+                f'<text x="{x0+cell_w/2:.1f}" y="{ypos+27}" text-anchor="middle" '
+                f'font-family="sans-serif" font-size="11">{decision}</text>'
+            )
 
     out.append("</svg>")
     path.write_text("\n".join(out), encoding="utf-8")
