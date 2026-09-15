@@ -1,0 +1,13 @@
+scenario,policy,runs,correct_decision_rate,harmful_launch_rate,missed_opportunity_rate,inconclusive_rate,mean_regret
+easy_large_win,statistical_superiority,100,1.0,0.0,0.0,0.0,0.0
+easy_large_win,practical_significance,100,0.99,0.0,0.0,0.01,10.0
+easy_large_win,economic_break_even,100,1.0,0.0,0.0,0.0,0.0
+easy_large_win,risk_adjusted_expected_value,100,1.0,0.0,0.0,0.0,0.0
+near_break_even,statistical_superiority,100,0.69,0.0,0.0,0.31,310.0
+near_break_even,practical_significance,100,0.04,0.0,0.03,0.93,3930.0
+near_break_even,economic_break_even,100,0.04,0.0,0.01,0.95,1950.0
+near_break_even,risk_adjusted_expected_value,100,0.04,0.0,0.01,0.95,1950.0
+misspecified_value,statistical_superiority,100,0.16,0.0,0.03,0.81,47610.0
+misspecified_value,practical_significance,100,0.06,0.0,0.08,0.86,125660.0
+misspecified_value,economic_break_even,100,0.15,0.0,0.03,0.82,47620.0
+misspecified_value,risk_adjusted_expected_value,100,0.15,0.0,0.03,0.82,47620.0

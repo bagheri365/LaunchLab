@@ -37,6 +37,12 @@ from .power import (
     power_for_two_proportions,
     required_sample_size_per_arm,
 )
+from .reporting import (
+    write_policy_aggregates_csv,
+    write_power_comparison_svg,
+    write_power_comparisons_csv,
+    write_regret_svg,
+)
 from .repeated import (
     RepeatedUserExperiment,
     analyze_at_user_level,
@@ -89,6 +95,10 @@ __all__ = [
     "risk_adjusted_expected_value_policy",
     "risk_weighted_loss",
     "run_monte_carlo_benchmark",
+    "write_policy_aggregates_csv",
+    "write_power_comparison_svg",
+    "write_power_comparisons_csv",
+    "write_regret_svg",
     "simulate_experiment",
     "simulate_repeated_user_experiment",
     "statistical_power_for_scenario",

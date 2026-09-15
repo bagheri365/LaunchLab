@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1100" height="418" viewBox="0 0 1100 418">
+<rect width="100%" height="100%" fill="white"/>
+<text x="40" y="38" font-family="sans-serif" font-size="22" font-weight="bold">Mean economic regret by policy</text>
+<line x1="350" y1="373" x2="1030" y2="373" stroke="black"/>
+<text x="338" y="82" text-anchor="end" font-family="sans-serif" font-size="11">easy_large_win · statistical_superiority</text>
+<rect x="350" y="70" width="0.0" height="14" fill="#444444"/>
+<text x="356.0" y="82" font-family="sans-serif" font-size="11">0</text>
+<text x="338" y="106" text-anchor="end" font-family="sans-serif" font-size="11">easy_large_win · practical_significance</text>
+<rect x="350" y="94" width="0.1" height="14" fill="#444444"/>
+<text x="356.1" y="106" font-family="sans-serif" font-size="11">10</text>
+<text x="338" y="130" text-anchor="end" font-family="sans-serif" font-size="11">easy_large_win · economic_break_even</text>
+<rect x="350" y="118" width="0.0" height="14" fill="#444444"/>
+<text x="356.0" y="130" font-family="sans-serif" font-size="11">0</text>
+<text x="338" y="154" text-anchor="end" font-family="sans-serif" font-size="11">easy_large_win · risk_adjusted_expected_value</text>
+<rect x="350" y="142" width="0.0" height="14" fill="#444444"/>
+<text x="356.0" y="154" font-family="sans-serif" font-size="11">0</text>
+<text x="338" y="178" text-anchor="end" font-family="sans-serif" font-size="11">near_break_even · statistical_superiority</text>
+<rect x="350" y="166" width="1.7" height="14" fill="#444444"/>
+<text x="357.7" y="178" font-family="sans-serif" font-size="11">310</text>
+<text x="338" y="202" text-anchor="end" font-family="sans-serif" font-size="11">near_break_even · practical_significance</text>
+<rect x="350" y="190" width="21.3" height="14" fill="#444444"/>
+<text x="377.3" y="202" font-family="sans-serif" font-size="11">3930</text>
+<text x="338" y="226" text-anchor="end" font-family="sans-serif" font-size="11">near_break_even · economic_break_even</text>
+<rect x="350" y="214" width="10.6" height="14" fill="#444444"/>
+<text x="366.6" y="226" font-family="sans-serif" font-size="11">1950</text>
+<text x="338" y="250" text-anchor="end" font-family="sans-serif" font-size="11">near_break_even · risk_adjusted_expected_value</text>
+<rect x="350" y="238" width="10.6" height="14" fill="#444444"/>
+<text x="366.6" y="250" font-family="sans-serif" font-size="11">1950</text>
+<text x="338" y="274" text-anchor="end" font-family="sans-serif" font-size="11">misspecified_value · statistical_superiority</text>
+<rect x="350" y="262" width="257.6" height="14" fill="#444444"/>
+<text x="613.6" y="274" font-family="sans-serif" font-size="11">47610</text>
+<text x="338" y="298" text-anchor="end" font-family="sans-serif" font-size="11">misspecified_value · practical_significance</text>
+<rect x="350" y="286" width="680.0" height="14" fill="#444444"/>
+<text x="1036.0" y="298" font-family="sans-serif" font-size="11">125660</text>
+<text x="338" y="322" text-anchor="end" font-family="sans-serif" font-size="11">misspecified_value · economic_break_even</text>
+<rect x="350" y="310" width="257.7" height="14" fill="#444444"/>
+<text x="613.7" y="322" font-family="sans-serif" font-size="11">47620</text>
+<text x="338" y="346" text-anchor="end" font-family="sans-serif" font-size="11">misspecified_value · risk_adjusted_expected_value</text>
+<rect x="350" y="334" width="257.7" height="14" fill="#444444"/>
+<text x="613.7" y="346" font-family="sans-serif" font-size="11">47620</text>
+</svg>

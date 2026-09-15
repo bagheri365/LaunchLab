@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1100" height="486" viewBox="0 0 1100 486">
+<rect width="100%" height="100%" fill="white"/>
+<text x="40" y="38" font-family="sans-serif" font-size="22" font-weight="bold">Statistical power vs decision power</text>
+<line x1="350" y1="65" x2="350" y2="441" stroke="black"/>
+<line x1="350" y1="441" x2="1030" y2="441" stroke="black"/>
+<line x1="350.0" y1="65" x2="350.0" y2="441" stroke="#dddddd"/>
+<text x="350.0" y="466" text-anchor="middle" font-family="sans-serif" font-size="12">0.0</text>
+<line x1="486.0" y1="65" x2="486.0" y2="441" stroke="#dddddd"/>
+<text x="486.0" y="466" text-anchor="middle" font-family="sans-serif" font-size="12">0.2</text>
+<line x1="622.0" y1="65" x2="622.0" y2="441" stroke="#dddddd"/>
+<text x="622.0" y="466" text-anchor="middle" font-family="sans-serif" font-size="12">0.4</text>
+<line x1="758.0" y1="65" x2="758.0" y2="441" stroke="#dddddd"/>
+<text x="758.0" y="466" text-anchor="middle" font-family="sans-serif" font-size="12">0.6</text>
+<line x1="894.0" y1="65" x2="894.0" y2="441" stroke="#dddddd"/>
+<text x="894.0" y="466" text-anchor="middle" font-family="sans-serif" font-size="12">0.8</text>
+<line x1="1030.0" y1="65" x2="1030.0" y2="441" stroke="#dddddd"/>
+<text x="1030.0" y="466" text-anchor="middle" font-family="sans-serif" font-size="12">1.0</text>
+<text x="338" y="92" text-anchor="end" font-family="sans-serif" font-size="11">easy_large_win · statistical_superiority</text>
+<rect x="350" y="80" width="674.8" height="8" fill="#999999"/>
+<rect x="350" y="91" width="680.0" height="8" fill="#222222"/>
+<text x="338" y="120" text-anchor="end" font-family="sans-serif" font-size="11">easy_large_win · practical_significance</text>
+<rect x="350" y="108" width="674.8" height="8" fill="#999999"/>
+<rect x="350" y="119" width="673.2" height="8" fill="#222222"/>
+<text x="338" y="148" text-anchor="end" font-family="sans-serif" font-size="11">easy_large_win · economic_break_even</text>
+<rect x="350" y="136" width="674.8" height="8" fill="#999999"/>
+<rect x="350" y="147" width="680.0" height="8" fill="#222222"/>
+<text x="338" y="176" text-anchor="end" font-family="sans-serif" font-size="11">easy_large_win · risk_adjusted_expected_value</text>
+<rect x="350" y="164" width="674.8" height="8" fill="#999999"/>
+<rect x="350" y="175" width="680.0" height="8" fill="#222222"/>
+<text x="338" y="204" text-anchor="end" font-family="sans-serif" font-size="11">near_break_even · statistical_superiority</text>
+<rect x="350" y="192" width="362.3" height="8" fill="#999999"/>
+<rect x="350" y="203" width="469.2" height="8" fill="#222222"/>
+<text x="338" y="232" text-anchor="end" font-family="sans-serif" font-size="11">near_break_even · practical_significance</text>
+<rect x="350" y="220" width="362.3" height="8" fill="#999999"/>
+<rect x="350" y="231" width="27.2" height="8" fill="#222222"/>
+<text x="338" y="260" text-anchor="end" font-family="sans-serif" font-size="11">near_break_even · economic_break_even</text>
+<rect x="350" y="248" width="362.3" height="8" fill="#999999"/>
+<rect x="350" y="259" width="27.2" height="8" fill="#222222"/>
+<text x="338" y="288" text-anchor="end" font-family="sans-serif" font-size="11">near_break_even · risk_adjusted_expected_value</text>
+<rect x="350" y="276" width="362.3" height="8" fill="#999999"/>
+<rect x="350" y="287" width="27.2" height="8" fill="#222222"/>
+<text x="338" y="316" text-anchor="end" font-family="sans-serif" font-size="11">misspecified_value · statistical_superiority</text>
+<rect x="350" y="304" width="60.6" height="8" fill="#999999"/>
+<rect x="350" y="315" width="108.8" height="8" fill="#222222"/>
+<text x="338" y="344" text-anchor="end" font-family="sans-serif" font-size="11">misspecified_value · practical_significance</text>
+<rect x="350" y="332" width="60.6" height="8" fill="#999999"/>
+<rect x="350" y="343" width="40.8" height="8" fill="#222222"/>
+<text x="338" y="372" text-anchor="end" font-family="sans-serif" font-size="11">misspecified_value · economic_break_even</text>
+<rect x="350" y="360" width="60.6" height="8" fill="#999999"/>
+<rect x="350" y="371" width="102.0" height="8" fill="#222222"/>
+<text x="338" y="400" text-anchor="end" font-family="sans-serif" font-size="11">misspecified_value · risk_adjusted_expected_value</text>
+<rect x="350" y="388" width="60.6" height="8" fill="#999999"/>
+<rect x="350" y="399" width="102.0" height="8" fill="#222222"/>
+<rect x="350" y="52" width="14" height="8" fill="#999999"/>
+<text x="370" y="60" font-family="sans-serif" font-size="12">statistical power</text>
+<rect x="500" y="52" width="14" height="8" fill="#222222"/>
+<text x="520" y="60" font-family="sans-serif" font-size="12">decision power</text>
+</svg>
