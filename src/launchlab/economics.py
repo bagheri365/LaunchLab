@@ -111,8 +111,8 @@ def economic_regret(
 ) -> float:
     """Raw economic regret for SHIP, REJECT, or INCONCLUSIVE.
 
-    INCONCLUSIVE pays the configured delay/continuation cost in addition to the
-    opportunity cost of not shipping a truly valuable candidate.
+    INCONCLUSIVE represents a temporary delay, so its cost is supplied directly
+    via ``inconclusive_cost``. It is not treated as a permanent rejection.
     """
     action = chosen_action.upper()
     value = annual_deployment_value(true_effect, config)
@@ -125,8 +125,7 @@ def economic_regret(
         return 0.0
 
     if action == "INCONCLUSIVE":
-        opportunity_cost = max(value, 0.0) if optimal is OptimalAction.SHIP else 0.0
-        return opportunity_cost + config.inconclusive_cost
+        return config.inconclusive_cost
 
     if optimal is OptimalAction.SHIP and action == "REJECT":
         return max(value, 0.0)
@@ -153,11 +152,7 @@ def risk_weighted_loss(
         return 0.0
 
     if action == "INCONCLUSIVE":
-        opportunity_cost = max(value, 0.0) if optimal is OptimalAction.SHIP else 0.0
-        return (
-            config.missed_opportunity_weight * opportunity_cost
-            + config.inconclusive_cost
-        )
+        return config.inconclusive_cost
 
     if optimal is OptimalAction.SHIP and action == "REJECT":
         return config.missed_opportunity_weight * max(value, 0.0)

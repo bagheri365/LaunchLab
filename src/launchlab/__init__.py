@@ -13,6 +13,7 @@ from .economics import (
     required_lift_for_break_even,
     risk_weighted_loss,
 )
+from .evaluation import BenchmarkScenario, PolicyAggregate, run_monte_carlo_benchmark
 from .experiment import ExperimentConfig
 from .inference import ProportionEffect, estimate_proportion_effect
 from .policies import (
@@ -40,10 +41,12 @@ from .validation import (
 
 __all__ = [
     "AAValidationResult",
+    "BenchmarkScenario",
     "EconomicsConfig",
     "ExperimentConfig",
     "LaunchDecision",
     "OptimalAction",
+    "PolicyAggregate",
     "PolicyResult",
     "ProportionEffect",
     "SampleRatioMismatchResult",
@@ -67,6 +70,7 @@ __all__ = [
     "required_sample_size_per_arm",
     "risk_adjusted_expected_value_policy",
     "risk_weighted_loss",
+    "run_monte_carlo_benchmark",
     "simulate_experiment",
     "statistical_superiority_policy",
     "validate_aa_experiment",

@@ -8,17 +8,24 @@ Implemented milestones:
 - confidence intervals;
 - statistical power, MDE, and required sample size;
 - user-level experiment configuration and simulation;
-- explicit separation of assignment and exposure;
-- A/A validation and sample-ratio mismatch diagnostics;
+- assignment/exposure separation;
+- A/A validation and SRM diagnostics;
 - deployment economics, break-even lift, product quality floors, and regret;
-- five three-way launch policies returning `SHIP`, `REJECT`, or `INCONCLUSIVE`.
+- five `SHIP` / `REJECT` / `INCONCLUSIVE` launch policies;
+- a small Monte Carlo benchmark for comparing decision quality and regret.
 
-Canonical v1 launch policies:
+The small benchmark reports:
 
-1. statistical superiority;
-2. practical significance;
-3. economic break-even;
-4. non-inferiority plus serving-cost savings;
-5. risk-adjusted expected value.
+- correct decision rate;
+- harmful launch rate;
+- missed opportunity rate;
+- inconclusive rate;
+- mean economic regret.
 
-Later milestones add repeated-user realism, Monte Carlo evaluation, and statistical-power vs decision-power analysis.
+Run it with:
+
+```bash
+python scripts/run_small_benchmark.py
+```
+
+Later milestones add repeated-user realism, broader benchmark regimes, and statistical-power vs decision-power analysis.

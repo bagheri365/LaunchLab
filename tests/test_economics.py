@@ -103,12 +103,11 @@ def test_shipping_unprofitable_model_creates_regret():
     assert economic_regret(0.0, "SHIP", config) == pytest.approx(-value)
 
 
-def test_inconclusive_pays_delay_cost_and_missed_upside():
+def test_inconclusive_pays_configured_delay_cost_only():
     config = base_config(inconclusive_cost=5_000.0)
-    value = annual_deployment_value(0.001, config)
 
     regret = economic_regret(0.001, "INCONCLUSIVE", config)
-    assert regret == pytest.approx(value + 5_000.0)
+    assert regret == pytest.approx(5_000.0)
 
 
 def test_risk_weighting_penalizes_harmful_launch_more():
