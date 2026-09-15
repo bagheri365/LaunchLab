@@ -1,0 +1,11 @@
+economics:
+  annual_traffic: 100000000
+  value_per_conversion: 20.0
+  incumbent_cost_per_request: 0.0010
+  candidate_cost_per_request: 0.0014
+  product_allowed_loss: 0.0001
+
+loss_weights:
+  harmful_launch: 2.0
+  missed_opportunity: 1.0
+  inconclusive: 0.1

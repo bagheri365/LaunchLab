@@ -1,0 +1,18 @@
+experiment:
+  randomization_unit: user
+  analysis_unit: user
+  primary_metric: 7_day_user_conversion
+  expected_treatment_share: 0.50
+  minimum_exposed_per_arm: 10000
+
+inference:
+  confidence: 0.95
+  target_power: 0.80
+  srm_alpha: 0.001
+  practical_threshold: 0.001
+
+workflow:
+  require_offline_gate: true
+  require_aa_validation_before_launch: true
+  fixed_horizon: true
+  allow_naive_repeated_peeking: false

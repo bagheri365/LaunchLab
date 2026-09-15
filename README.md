@@ -11,29 +11,28 @@ Implemented milestones:
 - five `SHIP` / `REJECT` / `INCONCLUSIVE` launch policies;
 - Monte Carlo benchmarking of decision quality;
 - repeated-user realism and a naive request-level failure case;
-- direct comparison of statistical power and decision power;
+- statistical-power vs decision-power analysis;
 - economic-assumption misspecification;
-- reproducible CSV tables and dependency-light SVG figures.
+- reproducible CSV/SVG reporting;
+- a production-style end-to-end launch workflow with predeclared gates.
 
-Run the current demos with:
+Run:
 
 ```bash
 python scripts/run_small_benchmark.py
 python scripts/run_repeated_user_demo.py
 python scripts/run_decision_power.py
 python scripts/run_reporting.py
+python scripts/run_workflow.py
 ```
 
-`run_reporting.py` writes reproducible artifacts to:
+The production workflow applies offline eligibility, SRM, exposure-count validation, user-level inference, MDE context, economics, and all applicable launch policies. A final `SHIP` or `REJECT` is returned only when applicable policies agree; otherwise the result remains `INCONCLUSIVE`.
+
+Confirmatory assumptions and example configuration live in:
 
 ```text
-results/
-├── figures/
-│   ├── decision_power_vs_statistical_power.svg
-│   └── mean_regret_by_policy.svg
-└── tables/
-    ├── decision_power.csv
-    └── policy_benchmark.csv
+configs/confirmatory.yaml
+configs/economics.yaml
+docs/preregistration.md
+docs/assumptions.md
 ```
-
-The reporting layer uses only the Python standard library for CSV and SVG generation, so it does not add a plotting dependency.

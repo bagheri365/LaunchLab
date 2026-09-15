@@ -50,6 +50,7 @@ from .repeated import (
     simulate_repeated_user_experiment,
 )
 from .simulation import SimulatedExperiment, simulate_experiment
+from .workflow import WorkflowConfig, WorkflowResult, run_launch_workflow
 from .validation import (
     AAValidationResult,
     SampleRatioMismatchResult,
@@ -104,4 +105,7 @@ __all__ = [
     "statistical_power_for_scenario",
     "statistical_superiority_policy",
     "validate_aa_experiment",
+    "WorkflowConfig",
+    "WorkflowResult",
+    "run_launch_workflow",
 ]
