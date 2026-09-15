@@ -31,6 +31,12 @@ from .power import (
     power_for_two_proportions,
     required_sample_size_per_arm,
 )
+from .repeated import (
+    RepeatedUserExperiment,
+    analyze_at_user_level,
+    analyze_naively_at_request_level,
+    simulate_repeated_user_experiment,
+)
 from .simulation import SimulatedExperiment, simulate_experiment
 from .validation import (
     AAValidationResult,
@@ -49,8 +55,11 @@ __all__ = [
     "PolicyAggregate",
     "PolicyResult",
     "ProportionEffect",
+    "RepeatedUserExperiment",
     "SampleRatioMismatchResult",
     "SimulatedExperiment",
+    "analyze_at_user_level",
+    "analyze_naively_at_request_level",
     "annual_cost_savings",
     "annual_deployment_value",
     "annual_incremental_serving_cost",
@@ -72,6 +81,7 @@ __all__ = [
     "risk_weighted_loss",
     "run_monte_carlo_benchmark",
     "simulate_experiment",
+    "simulate_repeated_user_experiment",
     "statistical_superiority_policy",
     "validate_aa_experiment",
 ]
