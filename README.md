@@ -2,12 +2,19 @@
 
 LaunchLab studies when an online experiment provides enough evidence to replace an incumbent ML model.
 
-The first implementation milestone focuses on:
+Implemented milestones:
 
 - treatment-effect inference for two independent user-level conversion rates;
 - confidence intervals;
 - statistical power;
 - minimum detectable effect (MDE);
-- required sample size.
+- required sample size;
+- user-level experiment configuration;
+- deterministic control/treatment assignment;
+- explicit separation of assignment and exposure;
+- synthetic exposed-user conversion outcomes;
+- A/A validation;
+- sample-ratio mismatch (SRM) diagnostics.
 
-Later milestones add experiment validation, simulation, economics, launch policies, and decision regret.
+The canonical v1 experiment randomizes at the user level and analyzes a user-level conversion outcome.
+Later milestones add economics, launch policies, repeated-user realism, and decision regret.
