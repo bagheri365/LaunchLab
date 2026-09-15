@@ -22,6 +22,7 @@ from .economics import (
 from .evaluation import BenchmarkScenario, PolicyAggregate, run_monte_carlo_benchmark
 from .experiment import ExperimentConfig
 from .inference import ProportionEffect, estimate_proportion_effect
+from .planning import DecisionReadinessPlan, TrafficRequirement, plan_decision_readiness
 from .policies import (
     LaunchDecision,
     PolicyResult,
@@ -67,6 +68,8 @@ __all__ = [
     "OptimalAction",
     "PolicyAggregate",
     "PolicyResult",
+    "DecisionReadinessPlan",
+    "TrafficRequirement",
     "PowerComparison",
     "ProportionEffect",
     "RepeatedUserExperiment",
@@ -91,6 +94,7 @@ __all__ = [
     "optimal_action",
     "power_for_two_proportions",
     "practical_significance_policy",
+    "plan_decision_readiness",
     "required_lift_for_break_even",
     "required_sample_size_per_arm",
     "risk_adjusted_expected_value_policy",

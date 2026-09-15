@@ -14,7 +14,8 @@ Implemented milestones:
 - statistical-power vs decision-power analysis;
 - economic-assumption misspecification;
 - reproducible CSV/SVG reporting;
-- a production-style end-to-end launch workflow with predeclared gates.
+- a production-style end-to-end launch workflow with predeclared gates;
+- decision-readiness traffic planning for inconclusive experiments.
 
 Run:
 
@@ -24,15 +25,7 @@ python scripts/run_repeated_user_demo.py
 python scripts/run_decision_power.py
 python scripts/run_reporting.py
 python scripts/run_workflow.py
+python scripts/run_traffic_planning.py
 ```
 
-The production workflow applies offline eligibility, SRM, exposure-count validation, user-level inference, MDE context, economics, and all applicable launch policies. A final `SHIP` or `REJECT` is returned only when applicable policies agree; otherwise the result remains `INCONCLUSIVE`.
-
-Confirmatory assumptions and example configuration live in:
-
-```text
-configs/confirmatory.yaml
-configs/economics.yaml
-docs/preregistration.md
-docs/assumptions.md
-```
+The traffic planner estimates required and additional per-arm sample sizes for the observed effect, the practical-significance threshold, and any positive economic break-even threshold. The largest requirement is reported as the binding decision-readiness constraint.
