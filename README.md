@@ -41,17 +41,41 @@ The grid makes policy flips explicit as sample size and business assumptions cha
 
 <!-- LAUNCHLAB_PORTFOLIO_START -->
 
+## LaunchLab in 30 seconds
+
+**LaunchLab is a simulation framework for deciding whether an ML model should ship when statistical significance, business value, and launch risk disagree.**
+
+It compares conventional significance testing with decision-aware launch policies and measures **decision power**: the probability of making the economically correct launch decision.
+
+### What this project shows
+
+- **No single launch rule dominates.** The minimum-regret policy changes across experiment size, economic assumptions, and delay cost.
+- **Economic assumptions matter.** In the tested misspecification grid, mean regret for the economic break-even policy ranges from about **$1,850 to $119,405**.
+- **Waiting has a price.** As the cost of an inconclusive decision rises, the minimum-regret probability threshold becomes less conservative.
+- **Statistical power is not decision power.** Detecting a nonzero effect and making the economically correct launch decision are different objectives.
+
+### Headline results
+
+| Result | Finding |
+| --- | --- |
+| Joint decision surface | Statistical superiority wins 144 regions, practical significance 96, economic break-even 48 |
+| Delay-cost crossover | Preferred probability threshold first relaxes around a $75,000 inconclusive cost in both tested scenarios |
+| Economic misspecification | Economic break-even mean regret ranges from about $1,850 to $119,405 |
+| Validation | Full test suite passes in the final portfolio check |
+
+**Why it matters:** a model can be statistically distinguishable from an incumbent without being economically worth shipping, while an economically valuable model can remain statistically inconclusive longer than the business can afford to wait.
+
+These are simulation results under the configured scenarios, not universal constants.
+
 ## Research question
 
 **How does experiment size affect the probability of making the economically correct model-launch decision, and when do decision-aware launch rules outperform conventional statistical significance?**
-
-LaunchLab treats model deployment as a decision problem rather than a significance test. The project separates statistical evidence from economic value, models the cost of waiting, and evaluates launch rules by whether they lead to the economically correct action.
 
 A secondary question is how robust economically grounded launch rules remain when their business-value assumptions are wrong.
 
 ## What LaunchLab evaluates
 
-The canonical experiment randomizes and analyzes at the **user** level, uses a **7-day user conversion rate** as the primary outcome, and separates assignment from exposure. Synthetic experiments are the primary benchmark so that true treatment effects and true economic value are known.
+LaunchLab treats model deployment as a decision problem rather than a significance test. The canonical experiment randomizes and analyzes at the **user** level, uses a **7-day user conversion rate** as the primary outcome, and separates assignment from exposure. Synthetic experiments are the primary benchmark so that true treatment effects and true economic value are known.
 
 The framework compares:
 
@@ -66,26 +90,6 @@ The key distinction is:
 
 - **statistical power**: probability of rejecting the null under a specified alternative;
 - **decision power**: probability of making the economically correct launch decision.
-
-## Main findings
-
-The reproducible simulation studies show that **no single launch rule is uniformly minimum-regret across all tested operating conditions**.
-
-Across the current joint decision surface:
-
-| Minimum-regret policy | Operating points won |
-| --- | ---: |
-| Economic break-even | 48 |
-| Practical significance | 96 |
-| Statistical superiority | 144 |
-
-The operating regime matters. Under a true effect of `0.0008`, economic and practical thresholds dominate different regions; under a true effect of `0.0010`, statistical superiority wins the tested regions.
-
-The cost of indecision also changes the rational level of conservatism. In the probability-based policy study, the preferred launch-confidence threshold begins to fall from `0.990` once the configured inconclusive cost reaches about `$75,000` in both tested economic scenarios.
-
-Economic assumptions can be consequential even when experiment data do not change. Across the tested misspecification grid, mean regret for the economic break-even policy ranges from about `$1,850` to `$119,405`.
-
-These are simulation results under the configured scenarios, not universal constants.
 
 ## Reproduce the research outputs
 
@@ -144,12 +148,6 @@ configs/            confirmatory workflow and economics configuration
 docs/               preregistration, assumptions, limitations, and reproducibility notes
 results/            generated tables, figures, and reports (gitignored)
 ```
-
-## Why this matters
-
-A model can be statistically distinguishable from an incumbent without being economically worth shipping, and an economically valuable model can remain statistically inconclusive for longer than the business can afford to wait.
-
-LaunchLab makes those trade-offs explicit. It connects experiment design, statistical uncertainty, business value, launch risk, and delay cost in one reproducible framework.
 
 ## Limitations
 
