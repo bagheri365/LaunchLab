@@ -1,44 +1,11 @@
-# LaunchLab
+from __future__ import annotations
 
-LaunchLab studies when an online experiment provides enough evidence to replace an incumbent ML model.
+from pathlib import Path
 
-Implemented milestones:
+START = "<!-- LAUNCHLAB_PORTFOLIO_START -->"
+END = "<!-- LAUNCHLAB_PORTFOLIO_END -->"
 
-- treatment-effect inference, confidence intervals, power, MDE, and sample size;
-- user-level simulation with assignment/exposure separation;
-- A/A validation and SRM diagnostics;
-- deployment economics, break-even lift, product quality floors, and regret;
-- five `SHIP` / `REJECT` / `INCONCLUSIVE` launch policies;
-- Monte Carlo benchmarking of decision quality;
-- repeated-user realism and a naive request-level failure case;
-- statistical-power vs decision-power analysis;
-- economic-assumption misspecification;
-- reproducible CSV/SVG reporting;
-- a production-style end-to-end launch workflow with predeclared gates;
-- decision-readiness traffic planning;
-- sensitivity analysis over traffic, business value, serving cost, and practical thresholds.
-
-Run:
-
-```bash
-python scripts/run_small_benchmark.py
-python scripts/run_repeated_user_demo.py
-python scripts/run_decision_power.py
-python scripts/run_reporting.py
-python scripts/run_workflow.py
-python scripts/run_traffic_planning.py
-python scripts/run_sensitivity.py
-```
-
-The sensitivity runner writes:
-
-```text
-results/tables/sensitivity_grid.csv
-results/figures/economic_break_even_sensitivity.svg
-```
-
-The grid makes policy flips explicit as sample size and business assumptions change.
-
+SECTION = r"""
 <!-- LAUNCHLAB_PORTFOLIO_START -->
 
 ## Research question
@@ -189,3 +156,22 @@ python scripts/final_check.py
 ```
 
 <!-- LAUNCHLAB_PORTFOLIO_END -->
+""".strip()
+
+
+def update_readme(path: str | Path = "README.md") -> Path:
+    target = Path(path)
+    original = target.read_text(encoding="utf-8") if target.exists() else "# LaunchLab\n"
+
+    if START in original and END in original:
+        before = original.split(START, 1)[0].rstrip()
+        after = original.split(END, 1)[1].lstrip()
+        pieces = [before, SECTION]
+        if after:
+            pieces.append(after)
+        updated = "\n\n".join(piece for piece in pieces if piece)
+    else:
+        updated = original.rstrip() + "\n\n" + SECTION
+
+    target.write_text(updated.rstrip() + "\n", encoding="utf-8")
+    return target
