@@ -116,6 +116,10 @@ docs/               preregistration, assumptions, limitations, and reproducibili
 results/            generated tables, figures, and reports (gitignored)
 ```
 
+## Implemented capabilities
+
+User-level experimentation, A/A and SRM validation, power and MDE analysis, deployment economics, launch-policy benchmarking, repeated-user diagnostics, decision-power analysis, economic robustness, traffic planning, sensitivity analysis, and reproducible reporting.
+
 ## Limitations
 
 The current benchmark is deliberately controlled and synthetic. The main limitations are:
