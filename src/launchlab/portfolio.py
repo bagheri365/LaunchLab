@@ -8,57 +8,127 @@ END = "<!-- LAUNCHLAB_PORTFOLIO_END -->"
 SECTION = r"""
 <!-- LAUNCHLAB_PORTFOLIO_START -->
 
-## LaunchLab in 30 seconds
+## At a Glance
 
-**LaunchLab is a simulation framework for deciding whether an ML model should ship when statistical significance, business value, and launch risk disagree.**
-
-It compares conventional significance testing with decision-aware launch policies and measures **decision power**: the probability of making the economically correct launch decision.
-
-### What this project shows
-
-- **No single launch rule dominates.** The minimum-regret policy changes across experiment size, economic assumptions, and delay cost.
-- **Economic assumptions matter.** In the tested misspecification grid, mean regret for the economic break-even policy ranges from about **$1,850 to $119,405**.
-- **Waiting has a price.** As the cost of an inconclusive decision rises, the minimum-regret probability threshold becomes less conservative.
-- **Statistical power is not decision power.** Detecting a nonzero effect and making the economically correct launch decision are different objectives.
-
-### Headline results
-
-| Result | Finding |
-| --- | --- |
-| Joint decision surface | Statistical superiority wins 144 regions, practical significance 96, economic break-even 48 |
-| Delay-cost crossover | Preferred probability threshold first relaxes around a $75,000 inconclusive cost in both tested scenarios |
-| Economic misspecification | Economic break-even mean regret ranges from about $1,850 to $119,405 |
-| Validation | Full test suite passes in the final portfolio check |
-
-**Why it matters:** a model can be statistically distinguishable from an incumbent without being economically worth shipping, while an economically valuable model can remain statistically inconclusive longer than the business can afford to wait.
+- **Research question:** when does A/B-test evidence support the economically correct model-launch decision?
+- **Canonical design:** user-randomized, user-analyzed experiment with a 7-day user conversion outcome.
+- **Core distinction:** statistical power asks whether an effect is detectable; **decision power** asks whether the launch decision is economically correct.
+- **Policies compared:** statistical superiority, practical significance, economic break-even, non-inferiority plus savings, expected value, and probability-based risk adjustment.
+- **Main joint-surface result:** statistical superiority is minimum-regret in 144 tested regions, practical significance in 96, and economic break-even in 48.
+- **Robustness result:** economic break-even mean regret ranges from about **$1,850 to $119,405** across the tested economic-misspecification grid.
+- **Decision-timing result:** the preferred probability threshold first becomes less conservative around a **$75,000** inconclusive cost in both tested scenarios.
 
 These are simulation results under the configured scenarios, not universal constants.
 
-## Research question
+## Why This Project Exists
 
-**How does experiment size affect the probability of making the economically correct model-launch decision, and when do decision-aware launch rules outperform conventional statistical significance?**
+Online model launches often collapse into a single question:
 
-A secondary question is how robust economically grounded launch rules remain when their business-value assumptions are wrong.
+> Is the A/B test statistically significant?
 
-## What LaunchLab evaluates
+That is not the same as asking whether the candidate is worth shipping.
 
-LaunchLab treats model deployment as a decision problem rather than a significance test. The canonical experiment randomizes and analyzes at the **user** level, uses a **7-day user conversion rate** as the primary outcome, and separates assignment from exposure. Synthetic experiments are the primary benchmark so that true treatment effects and true economic value are known.
+A candidate can be statistically distinguishable from an incumbent but economically unattractive after serving cost. A candidate can also be economically valuable while remaining statistically inconclusive longer than the business can afford to wait.
 
-The framework compares:
+LaunchLab therefore separates three questions:
 
-- statistical superiority;
-- practical significance;
-- economic break-even;
-- non-inferiority plus cost savings;
-- expected-value launch rules;
-- probability-based risk adjustment.
+1. **Can the experiment detect the effect?**
+2. **Is the effect large enough to matter operationally or economically?**
+3. **Given uncertainty and delay cost, what launch action minimizes regret?**
 
-The key distinction is:
+The project evaluates launch rules by the decisions they produce, not only by whether they reject a null hypothesis.
 
-- **statistical power**: probability of rejecting the null under a specified alternative;
-- **decision power**: probability of making the economically correct launch decision.
+## Experimental Design
 
-## Reproduce the research outputs
+The primary benchmark is synthetic so that the true treatment effect and the true economic value are known.
+
+| Design choice | Canonical setting |
+| --- | --- |
+| Randomization unit | User |
+| Analysis unit | User |
+| Primary metric | 7-day user conversion rate |
+| Assignment vs exposure | Modeled separately |
+| Treatment effect | Absolute conversion-rate difference |
+| Decision outcomes | `SHIP`, `REJECT`, `INCONCLUSIVE` |
+| Primary evidence | Monte Carlo simulation |
+| Economic objective | Minimize decision regret |
+
+The framework also includes repeated-user simulations to show how request-level pseudo-replication can understate uncertainty when the true experimental unit is the user.
+
+## Key Findings
+
+### Statistical Power Is Not Decision Power
+
+Statistical power is the probability of rejecting the null under a specified alternative.
+
+Decision power is the probability of making the economically correct launch decision.
+
+Those quantities can diverge because a detectable effect can still fall below a practical or economic launch threshold, while an economically attractive effect may remain uncertain at the available sample size.
+
+### No Single Launch Rule Dominates the Joint Decision Surface
+
+Across the tested joint surface of sample size, economic assumptions, delay cost, and true effect:
+
+| Minimum-regret policy | Operating points |
+| --- | ---: |
+| Statistical superiority | 144 |
+| Practical significance | 96 |
+| Economic break-even | 48 |
+
+Under the tested true effect of `0.0008`, practical significance and economic break-even win different regions. Under the tested true effect of `0.0010`, statistical superiority wins the evaluated regions.
+
+The result is diagnostic rather than a universal policy ranking because the simulation conditions on known truth.
+
+### Economic Assumptions Can Dominate Launch Regret
+
+The misspecification study perturbs assumed conversion value and assumed incremental serving cost while keeping the experiment data-generating process fixed.
+
+For the economic break-even policy, mean regret across that grid ranges from about:
+
+- **$1,850** at the low end;
+- **$119,405** at the high end.
+
+The same experiment can therefore support very different economic decisions when the business-value model is wrong.
+
+### Delay Cost Changes the Rational Level of Conservatism
+
+The probability-based launch rule ships only when the probability of positive annual value clears a configured threshold.
+
+At low delay cost, the minimum-regret threshold is `0.990` in both tested scenarios. At an inconclusive cost of about `$75,000`, the preferred threshold first relaxes:
+
+- true effect `0.0008`: `0.990 -> 0.975`;
+- true effect `0.0010`: `0.990 -> 0.900`.
+
+The implication is not that one probability threshold is universally correct. The cost of waiting is part of the launch decision.
+
+### Request-Level Pseudo-Replication Creates False Confidence
+
+LaunchLab simulates repeated requests from the same users and compares the correct user-level analysis with a naive request-level analysis.
+
+The purpose is to make a common experiment-design failure visible: treating correlated requests as independent observations can make uncertainty appear much smaller than it really is.
+
+## Launch Decision Framework
+
+| Policy | Decision idea |
+| --- | --- |
+| Statistical superiority | Ship when the candidate is statistically superior |
+| Practical significance | Require improvement beyond a product-relevant threshold |
+| Economic break-even | Require estimated value to exceed incremental serving cost |
+| Non-inferiority + savings | Permit limited quality loss when savings justify it |
+| Expected-value rule | Compare estimated annual value against the launch boundary |
+| Probability risk adjustment | Require sufficient probability that annual value is positive |
+
+A production-style workflow also adds an offline eligibility gate, exposed-user SRM checks, minimum exposed-user requirements, user-level inference, MDE calculation, and a conservative consensus decision.
+
+## Research Evolution
+
+The project develops the launch problem in layers:
+
+> inference -> simulation -> validation -> economics -> policies -> decision power -> robustness -> delay cost -> joint decision surface -> reporting
+
+Each layer isolates a different reason that “statistically significant” may fail to answer “should we ship?”
+
+## Reproducibility
 
 Run the full test suite:
 
@@ -66,15 +136,22 @@ Run the full test suite:
 pytest
 ```
 
-Generate the core research summary:
+Run the main research experiments:
+
+```bash
+python scripts/run_aa.py
+python scripts/run_workflow.py
+python scripts/run_sensitivity.py
+python scripts/run_robustness.py
+python scripts/run_risk_adjustment.py
+python scripts/run_delay_sensitivity.py
+python scripts/run_joint_surface.py
+```
+
+Build the research and publication outputs:
 
 ```bash
 python scripts/build_research_report.py
-```
-
-Generate the publication outputs:
-
-```bash
 python scripts/build_publication_outputs.py
 ```
 
@@ -91,21 +168,13 @@ results/figures/publication_sample_size_policy.svg
 
 Generated analysis outputs live under `results/` and are intentionally ignored by Git.
 
-## End-to-end workflow
+For a lightweight portfolio validation:
 
-LaunchLab includes a production-oriented decision workflow that performs:
+```bash
+python scripts/final_check.py
+```
 
-1. an offline eligibility gate;
-2. exposed-user sample-ratio-mismatch checks;
-3. minimum exposed-user checks;
-4. user-level treatment-effect inference;
-5. minimum-detectable-effect calculation;
-6. policy-specific launch decisions;
-7. a conservative consensus decision of `SHIP`, `REJECT`, or `INCONCLUSIVE`.
-
-The repository also includes repeated-user simulations to demonstrate how analyzing request-level observations as if they were independent can materially understate uncertainty.
-
-## Project structure
+## Repository Structure
 
 ```text
 src/launchlab/      statistical, economic, simulation, policy, and reporting code
@@ -116,46 +185,59 @@ docs/               preregistration, assumptions, limitations, and reproducibili
 results/            generated tables, figures, and reports (gitignored)
 ```
 
-## Implemented capabilities
+## Experimental Discipline
 
-User-level experimentation, A/A and SRM validation, power and MDE analysis, deployment economics, launch-policy benchmarking, repeated-user diagnostics, decision-power analysis, economic robustness, traffic planning, sensitivity analysis, and reproducible reporting.
+LaunchLab is built around a few explicit rules:
+
+- randomize and analyze at the user level for the canonical experiment;
+- separate assignment from exposure;
+- run A/A checks and exposed-user SRM diagnostics;
+- distinguish statistical detectability from product and economic thresholds;
+- evaluate decisions against known simulated truth when benchmarking;
+- keep true economics separate from assumed policy economics in misspecification studies;
+- model `INCONCLUSIVE` as a temporary delay/continuation cost rather than permanent rejection;
+- preserve reproducible tables, figures, and reports from deterministic experiment runners.
 
 ## Limitations
 
-The current benchmark is deliberately controlled and synthetic. The main limitations are:
+The current benchmark is deliberately controlled and synthetic.
 
-- binary conversion outcomes rather than richer metric families;
-- simplified and mostly stationary traffic and effect assumptions;
-- business value represented through configured conversion value and request cost;
-- policy comparisons evaluated over a finite scenario grid;
-- no claim that the current minimum-regret policy counts generalize outside those scenarios;
-- the current joint-surface optimum is diagnostic because it conditions on known simulated truth;
-- external-data validation is secondary rather than the primary source of causal identification.
+- Outcomes are binary conversions rather than richer metric families.
+- Traffic and treatment effects are simplified and mostly stationary.
+- Business value is represented through conversion value and request cost.
+- Policy comparisons cover a finite scenario grid.
+- Minimum-regret policy counts should not be generalized outside that grid.
+- The joint-surface optimum is diagnostic because it conditions on known simulated truth.
+- The current framework does not yet model interference, clustered assignment, switchback designs, sequential testing, or adaptive experimentation.
+- External-data validation is secondary rather than the primary source of causal identification.
 
 See `docs/limitations.md` for additional detail.
 
-## Reproducibility checklist
+## What the Experiments Suggest
 
-A clean validation run should include:
+The current evidence supports a decision-aware launch process:
 
-```bash
-pytest
-python scripts/run_aa.py
-python scripts/run_workflow.py
-python scripts/run_sensitivity.py
-python scripts/run_robustness.py
-python scripts/run_risk_adjustment.py
-python scripts/run_delay_sensitivity.py
-python scripts/run_joint_surface.py
-python scripts/build_research_report.py
-python scripts/build_publication_outputs.py
-```
+- use statistical inference to quantify uncertainty;
+- use product and economic thresholds to define what matters;
+- treat serving cost and business value as part of the decision boundary;
+- account for the cost of waiting when choosing how conservative to be;
+- analyze at the unit that was actually randomized;
+- evaluate launch policies by decision quality and regret, not significance alone.
 
-For a lightweight portfolio check, run:
+A working design hypothesis from LaunchLab is:
 
-```bash
-python scripts/final_check.py
-```
+> Ship rules should be calibrated to the economics and timing of the decision, not chosen from statistical significance alone.
+
+## Future Research
+
+Natural extensions include:
+
+- ex-ante policy selection that integrates regret over a distribution of plausible true effects;
+- richer outcome families beyond binary conversion;
+- sequential and adaptive experimentation;
+- clustered, networked, or switchback designs;
+- stronger external-data validation;
+- broader economic models including retention, long-run feedback, and strategic option value.
 
 <!-- LAUNCHLAB_PORTFOLIO_END -->
 """.strip()
