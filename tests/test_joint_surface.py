@@ -102,3 +102,42 @@ def test_probability_policy_uses_true_economics_for_regret():
     )
     assert risk.treatment_effect == 0.001
     assert risk.mean_regret >= 0.0
+
+
+def test_regret_components_sum_to_mean_regret():
+    rows = run_joint_decision_surface(
+        baseline_conversion=0.05,
+        treatment_effect=0.0008,
+        true_economics=economics(),
+        n_users_values=[50_000],
+        value_multipliers=[1.0],
+        cost_multipliers=[1.0],
+        inconclusive_costs=[25_000.0],
+        probability_threshold=0.95,
+        runs=20,
+    )
+
+    for row in rows:
+        component_total = (
+            row.harmful_launch_regret
+            + row.missed_opportunity_regret
+            + row.inconclusive_regret
+        )
+        assert component_total == pytest.approx(row.mean_regret)
+
+
+def test_regret_decomposition_is_one_sided_for_ship_truth():
+    rows = run_joint_decision_surface(
+        baseline_conversion=0.05,
+        treatment_effect=0.001,
+        true_economics=economics(),
+        n_users_values=[50_000],
+        value_multipliers=[1.0],
+        cost_multipliers=[1.0],
+        inconclusive_costs=[1_000.0],
+        runs=10,
+    )
+
+    assert all(row.harmful_launch_regret == 0.0 for row in rows)
+    assert all(row.missed_opportunity_regret >= 0.0 for row in rows)
+    assert all(row.inconclusive_regret >= 0.0 for row in rows)

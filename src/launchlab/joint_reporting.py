@@ -27,6 +27,9 @@ def write_joint_surface_csv(
                 "harmful_launch_rate",
                 "missed_opportunity_rate",
                 "inconclusive_rate",
+                "harmful_launch_regret",
+                "missed_opportunity_regret",
+                "inconclusive_regret",
                 "mean_regret",
             ]
         )
@@ -43,6 +46,9 @@ def write_joint_surface_csv(
                     row.harmful_launch_rate,
                     row.missed_opportunity_rate,
                     row.inconclusive_rate,
+                    row.harmful_launch_regret,
+                    row.missed_opportunity_regret,
+                    row.inconclusive_regret,
                     row.mean_regret,
                 ]
             )

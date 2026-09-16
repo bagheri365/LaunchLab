@@ -57,6 +57,43 @@ def main() -> None:
         print(f"{policy:<35} {count:>4}")
 
     print()
+    print("regret decomposition at correctly specified operating points")
+    lookup = {
+        (
+            row.treatment_effect,
+            row.n_users,
+            row.assumed_value_multiplier,
+            row.assumed_cost_multiplier,
+            row.inconclusive_cost,
+            row.policy,
+        ): row
+        for row in rows
+    }
+    for optimum in optima:
+        if (
+            optimum.assumed_value_multiplier == 1.0
+            and optimum.assumed_cost_multiplier == 1.0
+        ):
+            row = lookup[(
+                optimum.treatment_effect,
+                optimum.n_users,
+                optimum.assumed_value_multiplier,
+                optimum.assumed_cost_multiplier,
+                optimum.inconclusive_cost,
+                optimum.policy,
+            )]
+            print(
+                f"effect={row.treatment_effect:.4f} "
+                f"n={row.n_users:<7} "
+                f"delay={row.inconclusive_cost:>8.0f} "
+                f"policy={row.policy:<25} "
+                f"harmful={row.harmful_launch_regret:>9.0f} "
+                f"missed={row.missed_opportunity_regret:>9.0f} "
+                f"delay_regret={row.inconclusive_regret:>9.0f} "
+                f"total={row.mean_regret:>9.0f}"
+            )
+
+    print()
     print("selected correctly specified operating points")
     for row in optima:
         if (

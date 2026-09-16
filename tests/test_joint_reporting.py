@@ -17,13 +17,19 @@ def test_joint_surface_csv(tmp_path):
         harmful_launch_rate=0.0,
         missed_opportunity_rate=0.05,
         inconclusive_rate=0.85,
-        mean_regret=5_000.0,
+        harmful_launch_regret=0.0,
+        missed_opportunity_regret=750.0,
+        inconclusive_regret=850.0,
+        mean_regret=1_600.0,
     )
     path = write_joint_surface_csv([row], tmp_path / "joint.csv")
     header = path.read_text().splitlines()[0]
     assert "n_users" in header
     assert "assumed_value_multiplier" in header
     assert "inconclusive_cost" in header
+    assert "harmful_launch_regret" in header
+    assert "missed_opportunity_regret" in header
+    assert "inconclusive_regret" in header
     assert "mean_regret" in header
 
 

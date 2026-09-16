@@ -28,6 +28,9 @@ class JointSurfacePoint:
     harmful_launch_rate: float
     missed_opportunity_rate: float
     inconclusive_rate: float
+    harmful_launch_regret: float
+    missed_opportunity_regret: float
+    inconclusive_regret: float
     mean_regret: float
 
 
@@ -63,6 +66,36 @@ def _assumed_economics(
             + incremental_cost * cost_multiplier
         ),
         inconclusive_cost=inconclusive_cost,
+    )
+
+
+def _regret_components(
+    *,
+    treatment_effect: float,
+    true_economics: EconomicsConfig,
+    harmful_launch_rate: float,
+    missed_opportunity_rate: float,
+    inconclusive_rate: float,
+) -> tuple[float, float, float]:
+    harmful_cost = economic_regret(
+        treatment_effect,
+        LaunchDecision.SHIP.value,
+        true_economics,
+    )
+    missed_cost = economic_regret(
+        treatment_effect,
+        LaunchDecision.REJECT.value,
+        true_economics,
+    )
+    inconclusive_cost = economic_regret(
+        treatment_effect,
+        LaunchDecision.INCONCLUSIVE.value,
+        true_economics,
+    )
+    return (
+        harmful_launch_rate * harmful_cost,
+        missed_opportunity_rate * missed_cost,
+        inconclusive_rate * inconclusive_cost,
     )
 
 
@@ -216,6 +249,27 @@ def run_joint_decision_surface(
                                     aggregate.missed_opportunity_rate
                                 ),
                                 inconclusive_rate=aggregate.inconclusive_rate,
+                                harmful_launch_regret=_regret_components(
+                                    treatment_effect=treatment_effect,
+                                    true_economics=truth_economics,
+                                    harmful_launch_rate=aggregate.harmful_launch_rate,
+                                    missed_opportunity_rate=aggregate.missed_opportunity_rate,
+                                    inconclusive_rate=aggregate.inconclusive_rate,
+                                )[0],
+                                missed_opportunity_regret=_regret_components(
+                                    treatment_effect=treatment_effect,
+                                    true_economics=truth_economics,
+                                    harmful_launch_rate=aggregate.harmful_launch_rate,
+                                    missed_opportunity_rate=aggregate.missed_opportunity_rate,
+                                    inconclusive_rate=aggregate.inconclusive_rate,
+                                )[1],
+                                inconclusive_regret=_regret_components(
+                                    treatment_effect=treatment_effect,
+                                    true_economics=truth_economics,
+                                    harmful_launch_rate=aggregate.harmful_launch_rate,
+                                    missed_opportunity_rate=aggregate.missed_opportunity_rate,
+                                    inconclusive_rate=aggregate.inconclusive_rate,
+                                )[2],
                                 mean_regret=aggregate.mean_regret,
                             )
                         )
@@ -250,6 +304,27 @@ def run_joint_decision_surface(
                             harmful_launch_rate=harmful,
                             missed_opportunity_rate=missed,
                             inconclusive_rate=inconclusive,
+                            harmful_launch_regret=_regret_components(
+                                treatment_effect=treatment_effect,
+                                true_economics=truth_economics,
+                                harmful_launch_rate=harmful,
+                                missed_opportunity_rate=missed,
+                                inconclusive_rate=inconclusive,
+                            )[0],
+                            missed_opportunity_regret=_regret_components(
+                                treatment_effect=treatment_effect,
+                                true_economics=truth_economics,
+                                harmful_launch_rate=harmful,
+                                missed_opportunity_rate=missed,
+                                inconclusive_rate=inconclusive,
+                            )[1],
+                            inconclusive_regret=_regret_components(
+                                treatment_effect=treatment_effect,
+                                true_economics=truth_economics,
+                                harmful_launch_rate=harmful,
+                                missed_opportunity_rate=missed,
+                                inconclusive_rate=inconclusive,
+                            )[2],
                             mean_regret=mean_regret,
                         )
                     )
